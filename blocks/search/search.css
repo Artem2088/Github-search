@@ -5,6 +5,9 @@
     padding: 3px 6px;
 }
 
+.search__button:disabled {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
 
 .search__input {
     border: 1px solid rgb(0, 0, 0);
@@ -16,4 +19,8 @@
 input:focus {
     border-color: dodgerBlue;
     box-shadow: 0 0 3px 0 dodgerBlue;
+}
+
+.search__form {
+    position: relative;
 }

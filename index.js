@@ -5,7 +5,7 @@ const div = document.createElement("div");
 div.classList.add("search");
 
 const form = document.createElement("form");
-form.classList.add("searc__form");
+form.classList.add("search__form");
 
 const input = document.createElement("input");
 input.classList.add("search__input");
@@ -36,20 +36,43 @@ closeBtn.classList.add("popup__button");
 closeBtn.setAttribute("type", "button");
 closeBtn.innerText = "X";
 
+const errSpan = document.createElement("span");
+errSpan.classList.add("error");
+
 popup.appendChild(popupWrapper);
 main.appendChild(div);
 div.appendChild(form);
 form.appendChild(input);
 form.appendChild(searchBtn);
+form.appendChild(errSpan);
 main.appendChild(loader);
 document.body.append(popup);
 
+const valid = () => {
+  let err;
+  let count = input.value.length;
+  if (count < 2) {
+    err = false;
+    errSpan.style.visibility = "visible";
+    errSpan.innerText = `Введите минимум 2 символа, введено - ${count}`;
+  } else {
+    err = true;
+    errSpan.style.visibility = "hidden";
+  }
+  return err;
+};
+
 input.addEventListener("change", function () {
-  this.value != "" ? (searchBtn.disabled = false) : (searchBtn.disabled = true);
+  valid();
+  this.value != "" && valid()
+    ? (searchBtn.disabled = false)
+    : (searchBtn.disabled = true);
 });
 
 input.addEventListener("input", function () {
-  this.value != "" ? (searchBtn.disabled = false) : (searchBtn.disabled = true);
+  this.value != "" && valid()
+    ? (searchBtn.disabled = false)
+    : (searchBtn.disabled = true);
 });
 
 const checkRes = async (res) => {
