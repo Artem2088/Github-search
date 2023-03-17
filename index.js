@@ -92,6 +92,7 @@ const checkRes = async (res) => {
 };
 
 function createPopup(res) {
+  console.log(res);
   let mess;
   if (res.total_count == 0) {
     mess = "Ни чего не найдено";
@@ -120,14 +121,19 @@ closeBtn.addEventListener("click", function () {
   document.body.style.overflow = "";
 });
 
-const getRepo = async () => {
-  const response = await fetch(`${URL}?q=${input.value}`, {
-    headers: {
-      accept: "application/vnd.github+json",
-    },
-  });
-  checkRes(response);
-};
+async function getRepo() {
+  try {
+    const response = await fetch(`${URL}?q=${input.value}`, {
+      headers: {
+        accept: "application/vnd.github+json",
+      },
+    });
+    checkRes(response);
+  } catch (error) {
+    console.log(error);
+    createPopup(error);
+  }
+}
 
 form.addEventListener("submit", async function (e) {
   container.remove(this.children);
